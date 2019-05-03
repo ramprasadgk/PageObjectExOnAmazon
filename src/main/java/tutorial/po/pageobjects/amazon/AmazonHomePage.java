@@ -9,8 +9,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.asserts.Assertion;
 
+import tutorial.po.pageobjects.amazon.utils.GenericUtils;
 
-public class AmazonHomePage  {
+
+public class AmazonHomePage extends BasePage {
 	public WebDriver wd;
 	@FindBy(how = How.ID, using = "twotabsearchtextbox")
     @CacheLookup
@@ -19,9 +21,13 @@ public class AmazonHomePage  {
 	@FindBy(how = How.XPATH, using = "contains(text(),'iphone 6'")
 	private WebElement searchResultVerifyText;
 	
-	public AmazonHomePage(WebDriver wd) {
+	public AmazonHomePage(WebDriver wd)  {
+		super(wd);
 		this.wd=wd;
-		 PageFactory.initElements(wd, this);
+		wd.get("http://www.amazon.com");
+		PageFactory.initElements(wd, this);
+		this.verifyTitle("");
+		 
 	}
 	
 	public AmazonSearchResultsPage searchFor(String text) {
@@ -30,6 +36,12 @@ public class AmazonHomePage  {
 		searchBox.submit();
 		AmazonSearchResultsPage arp =new AmazonSearchResultsPage(wd);
 		return  arp;	
+		
+	}
+
+	@Override
+	public void verifyTitle(String title) {
+		// TODO Auto-generated method stub
 		
 	}
 
